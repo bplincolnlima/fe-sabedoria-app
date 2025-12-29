@@ -32,28 +32,36 @@ export function SummaryScreen({ userName, quizAnswers, onBackToHome }: SummarySc
       // Declaração Profética
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
-      doc.text('Declaração Profética', 20, 50);
+      doc.text('Declaracao Profetica', 20, 50);
       
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
-      const textoProfetico = `${userName}, cada desafio que você declarou será vencido! Deus viu sua coragem de enfrentar o que precisa ser transformado.`;
+      const textoProfetico = `${userName}, cada desafio que voce declarou sera vencido! Deus viu sua coragem de enfrentar o que precisa ser transformado.`;
       const linhasProfeticas = doc.splitTextToSize(textoProfetico, 170);
       doc.text(linhasProfeticas, 20, 60);
       
       // Lista de Vitórias
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
-      doc.text('Lista de Vitórias 2026', 20, 85);
+      doc.text('Lista de Vitorias 2026', 20, 85);
       
       let yPosition = 95;
       doc.setFontSize(10);
+      
+      const areaNames: Record<string, string> = {
+        familiar: 'AREA FAMILIAR',
+        espiritual: 'AREA ESPIRITUAL',
+        financeira: 'AREA FINANCEIRA',
+        saude: 'AREA DE SAUDE',
+        crescimento: 'AREA DE CRESCIMENTO'
+      };
       
       areas.forEach((area) => {
         const answer = quizAnswers[area.key as keyof QuizAnswers];
         
         // Título da área
         doc.setFont('helvetica', 'bold');
-        doc.text(`${area.icon} ${area.title}`, 20, yPosition);
+        doc.text(areaNames[area.key] || area.title, 20, yPosition);
         yPosition += 7;
         
         // Desafio
@@ -69,7 +77,7 @@ export function SummaryScreen({ userName, quizAnswers, onBackToHome }: SummarySc
         // Vitória declarada
         if (answer.text) {
           doc.setFont('helvetica', 'italic');
-          doc.text('Vitória declarada:', 25, yPosition);
+          doc.text('Vitoria declarada:', 25, yPosition);
           yPosition += 5;
           const vitoriaLinhas = doc.splitTextToSize(`"${answer.text}"`, 160);
           doc.text(vitoriaLinhas, 25, yPosition);
@@ -91,11 +99,11 @@ export function SummaryScreen({ userName, quizAnswers, onBackToHome }: SummarySc
       
       doc.setFontSize(10);
       doc.setFont('helvetica', 'italic');
-      const versiculo = '"Você não recebeu espírito de covardia, mas de poder, amor e moderação."';
+      const versiculo = '"Voce nao recebeu espirito de covardia, mas de poder, amor e moderacao."';
       const versiculoLinhas = doc.splitTextToSize(versiculo, 170);
       doc.text(versiculoLinhas, 105, yPosition, { align: 'center' });
       yPosition += versiculoLinhas.length * 5 + 3;
-      doc.text('2 Timóteo 1:7 e 1 João 4:4', 105, yPosition, { align: 'center' });
+      doc.text('2 Timoteo 1:7 e 1 Joao 4:4', 105, yPosition, { align: 'center' });
       
       // Salvar PDF
       doc.save(`Projeto_de_Vida_2026_${userName}.pdf`);
