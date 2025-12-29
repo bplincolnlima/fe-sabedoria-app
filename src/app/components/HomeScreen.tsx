@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Screen } from '../App';
-import { EbookCarousel } from './EbookCarousel';
 import { DizimosCard } from './DizimosCard';
-import { TestemunhosPreview } from './TestemunhosPreview';
 import { InstallInstructions } from './InstallInstructions';
 import { Download } from 'lucide-react';
 
