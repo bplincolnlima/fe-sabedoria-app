@@ -1,10 +1,4 @@
 import { useState, useEffect } from 'react';
-import testemunho1 from 'figma:asset/33a77bab01a7b94970adf03a3b9dca01cc250db6.png';
-import testemunho2 from 'figma:asset/218afb340bb581b24b3fb65d4c0db373069b2280.png';
-import testemunho3 from 'figma:asset/3ccaf9fac9717d0c4a7e165b0187ed63bd01a3cd.png';
-import testemunho4 from 'figma:asset/94c975ef55ad69621dd9d901aac4ae040d2a1567.png';
-import testemunho5 from 'figma:asset/7e628b868be7b17428c655a613c798dd811376c4.png';
-import testemunho6 from 'figma:asset/52af6ec2c4e7db9b12ce0011b1e1cf775ea508dc.png';
 
 interface Testemunho {
   nome: string;
@@ -20,37 +14,37 @@ export function TestemunhosCarousel() {
     {
       nome: 'Samara',
       categoria: 'Bênção Financeira',
-      image: testemunho1,
+      image: 'https://images.unsplash.com/photo-1556159992-e189f8e50104?w=800&h=600&fit=crop',
       alt: 'Testemunho de Samara - Conseguiu trocar o carro'
     },
     {
       nome: 'Márcia',
       categoria: 'Milagre Financeiro',
-      image: testemunho2,
+      image: 'https://images.unsplash.com/photo-1575516662637-99214ea59f23?w=800&h=600&fit=crop',
       alt: 'Testemunho de Márcia - Recebeu 2 bênçãos do banco'
     },
     {
       nome: 'Juliana Dias',
       categoria: 'Portas Abertas',
-      image: testemunho3,
+      image: 'https://images.unsplash.com/photo-1758880788331-216a4defce4b?w=800&h=600&fit=crop',
       alt: 'Testemunho de Juliana Dias - Filha conseguiu emprego e libertação do Kevin'
     },
     {
       nome: 'Elisangela',
       categoria: 'Vitória Conquistada',
-      image: testemunho4,
+      image: 'https://images.unsplash.com/photo-1642654877094-e8db202268de?w=800&h=600&fit=crop',
       alt: 'Testemunho de Elisangela - Passou no exame de direção e Deus honrou nas campanhas'
     },
     {
       nome: 'Josefa',
       categoria: 'Cura Milagrosa',
-      image: testemunho5,
+      image: 'https://images.unsplash.com/photo-1575516662637-99214ea59f23?w=800&h=600&fit=crop',
       alt: 'Testemunho de Josefa - Curada de dores e operação milagrosa'
     },
     {
       nome: 'Débora',
       categoria: 'Bênção Recebida',
-      image: testemunho6,
+      image: 'https://images.unsplash.com/photo-1556159992-e189f8e50104?w=800&h=600&fit=crop',
       alt: 'Testemunho de Débora - Recebeu carro, benção chegou'
     }
   ];
