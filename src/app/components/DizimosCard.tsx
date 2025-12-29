@@ -1,8 +1,3 @@
-KKKKKKK SIM SEU ARROMBADO! 😂
-Faltam MAIS 3 ARQUIVOS! Bora terminar isso:
-
-QUARTO ARQUIVO:
-📄 /src/app/components/DizimosCard.tsx
 import { useState } from 'react';
 
 export function DizimosCard() {
@@ -40,7 +35,7 @@ export function DizimosCard() {
 
           <div className="bg-amber-500/10 backdrop-blur-sm rounded-2xl p-5 mb-6 border border-amber-600/20">
             <p className="text-base italic leading-relaxed text-gray-300">
-              \"Deus ama ao que dá com alegria.\"
+              "Deus ama ao que dá com alegria."
             </p>
             <p className="text-sm text-right mt-2 font-bold text-amber-400">2 Coríntios 9:7</p>
           </div>
