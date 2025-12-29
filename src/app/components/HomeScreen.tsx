@@ -36,17 +36,7 @@ export function HomeScreen({ onNavigate, userName, projectCompleted }: HomeScree
       tracking: true,
       hero: projectCompleted
     },
-    // 3️⃣ Testemunhos - DOURADO ELEGANTE
-    {
-      id: 'testemunhos' as Screen,
-      title: 'Testemunhos',
-      description: 'Veja vitórias reais',
-      icon: '🙌',
-      gradient: 'from-amber-500 to-yellow-600',
-      bgDark: 'from-gray-900 to-black',
-      enabled: true
-    },
-    // 4️⃣ Falar com Bispo - PRETO COM ACENTO DOURADO
+    // 3️⃣ Falar com Bispo - PRETO COM ACENTO DOURADO
     {
       id: 'whatsapp' as Screen,
       title: 'Falar com Bispo',
@@ -61,10 +51,6 @@ export function HomeScreen({ onNavigate, userName, projectCompleted }: HomeScree
   const handleCardClick = (cardId: Screen) => {
     if (cardId === 'whatsapp') {
       window.open('https://wa.me/5567992055727', '_blank');
-      return;
-    }
-    if (cardId === 'dizimos') {
-      // Will be handled in the render
       return;
     }
     onNavigate(cardId);
@@ -163,21 +149,11 @@ export function HomeScreen({ onNavigate, userName, projectCompleted }: HomeScree
                       </svg>
                     )}
                   </div>
-
-                  {/* Preview for Testemunhos card */}
-                  {card.id === 'testemunhos' && (
-                    <div className="mt-6 pt-6 border-t border-gray-800">
-                      <TestemunhosPreview />
-                    </div>
-                  )}
                 </>
               )}
             </div>
           </button>
         ))}
-
-        {/* E-books Carousel */}
-        <EbookCarousel />
 
         {/* Dízimos e Ofertas Card */}
         <DizimosCard />
