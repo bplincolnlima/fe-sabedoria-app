@@ -1,4 +1,5 @@
 import { QuizAnswers } from '../App';
+import { jsPDF } from 'jspdf';
 
 interface SummaryScreenProps {
   userName: string;
@@ -16,8 +17,92 @@ export function SummaryScreen({ userName, quizAnswers, onBackToHome }: SummarySc
   ];
 
   const handleDownloadPDF = () => {
-    // Simulate PDF download
-    alert('Em breve você poderá baixar seu Projeto de Vida 2026 em PDF! 📄');
+    try {
+      const doc = new jsPDF();
+      
+      // Título
+      doc.setFontSize(22);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Projeto de Vida 2026', 105, 20, { align: 'center' });
+      
+      // Nome do usuário
+      doc.setFontSize(16);
+      doc.text(`${userName}`, 105, 35, { align: 'center' });
+      
+      // Declaração Profética
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Declaração Profética', 20, 50);
+      
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      const textoProfetico = `${userName}, cada desafio que você declarou será vencido! Deus viu sua coragem de enfrentar o que precisa ser transformado.`;
+      const linhasProfeticas = doc.splitTextToSize(textoProfetico, 170);
+      doc.text(linhasProfeticas, 20, 60);
+      
+      // Lista de Vitórias
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Lista de Vitórias 2026', 20, 85);
+      
+      let yPosition = 95;
+      doc.setFontSize(10);
+      
+      areas.forEach((area) => {
+        const answer = quizAnswers[area.key as keyof QuizAnswers];
+        
+        // Título da área
+        doc.setFont('helvetica', 'bold');
+        doc.text(`${area.icon} ${area.title}`, 20, yPosition);
+        yPosition += 7;
+        
+        // Desafio
+        if (answer.selected) {
+          doc.setFont('helvetica', 'normal');
+          doc.text('Desafio a vencer:', 25, yPosition);
+          yPosition += 5;
+          const desafioLinhas = doc.splitTextToSize(`"${answer.selected}"`, 160);
+          doc.text(desafioLinhas, 25, yPosition);
+          yPosition += desafioLinhas.length * 5 + 3;
+        }
+        
+        // Vitória declarada
+        if (answer.text) {
+          doc.setFont('helvetica', 'italic');
+          doc.text('Vitória declarada:', 25, yPosition);
+          yPosition += 5;
+          const vitoriaLinhas = doc.splitTextToSize(`"${answer.text}"`, 160);
+          doc.text(vitoriaLinhas, 25, yPosition);
+          yPosition += vitoriaLinhas.length * 5 + 8;
+        }
+        
+        // Nova página se necessário
+        if (yPosition > 250) {
+          doc.addPage();
+          yPosition = 20;
+        }
+      });
+      
+      // Versículo final
+      if (yPosition > 230) {
+        doc.addPage();
+        yPosition = 20;
+      }
+      
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'italic');
+      const versiculo = '"Você não recebeu espírito de covardia, mas de poder, amor e moderação."';
+      const versiculoLinhas = doc.splitTextToSize(versiculo, 170);
+      doc.text(versiculoLinhas, 105, yPosition, { align: 'center' });
+      yPosition += versiculoLinhas.length * 5 + 3;
+      doc.text('2 Timóteo 1:7 e 1 João 4:4', 105, yPosition, { align: 'center' });
+      
+      // Salvar PDF
+      doc.save(`Projeto_de_Vida_2026_${userName}.pdf`);
+    } catch (error) {
+      console.error('Erro ao gerar PDF:', error);
+      alert('Erro ao gerar o PDF. Por favor, tente novamente.');
+    }
   };
 
   const handleShare = () => {
