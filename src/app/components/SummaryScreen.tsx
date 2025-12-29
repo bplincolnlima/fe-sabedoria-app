@@ -240,13 +240,6 @@ export function SummaryScreen({ userName, quizAnswers, onBackToHome }: SummarySc
           </button>
 
           <button
-            onClick={handleShare}
-            className="w-full bg-gradient-to-r from-pink-500 to-rose-600 text-white text-2xl font-semibold py-6 px-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
-          >
-            🎉 Compartilhar minha Conquista
-          </button>
-
-          <button
             onClick={onBackToHome}
             className="w-full bg-white/90 backdrop-blur-sm text-gray-700 text-xl font-semibold py-5 px-8 rounded-2xl hover:bg-white transition-all duration-200 border-2 border-white/50"
           >
