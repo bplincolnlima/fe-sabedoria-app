@@ -7,7 +7,6 @@ import { QuizScreen } from "./components/QuizScreen";
 import { RewardCard } from "./components/RewardCard";
 import { SummaryScreen } from "./components/SummaryScreen";
 import { MyProjectScreen } from "./components/MyProjectScreen";
-import { TestemunhosScreen } from "./components/TestemunhosScreen";
 import { saveUser, saveQuiz, saveVictory } from "../utils/api";
 
 export type Screen =
