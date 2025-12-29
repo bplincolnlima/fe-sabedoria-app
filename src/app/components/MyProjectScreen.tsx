@@ -229,7 +229,7 @@ export function MyProjectScreen({
                       </div>
                     ) : (
                       <p className="text-sm text-gray-500 italic">
-                        Quando você conquistar esta vitória, volte aqui e escreva seu testemunho!
+                       Quando você conquistar esta vitória, volte aqui e escreva sua nota de vitória!
                       </p>
                     )}
                   </div>
@@ -244,7 +244,7 @@ export function MyProjectScreen({
       <div className="mt-8 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl p-6 text-white text-center">
         <p className="text-xl font-bold mb-2">Continue firme na jornada! 💪</p>
         <p className="text-base">
-          Cada vitória marcada é um testemunho do que Deus está fazendo em sua vida.
+          Cada vitória marcada é um registro do que Deus está fazendo em sua vida.
         </p>
       </div>
     </div>
