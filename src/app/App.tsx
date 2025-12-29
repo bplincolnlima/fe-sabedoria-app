@@ -1,4 +1,3 @@
-📄 COPIA ISSO AQUI CARALHO! 🔥
 import { useState, useEffect } from "react";
 import { SplashScreen } from "./components/SplashScreen";
 import { WelcomeScreen } from "./components/WelcomeScreen";
