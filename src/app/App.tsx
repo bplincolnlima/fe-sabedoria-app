@@ -8,6 +8,7 @@ import { RewardCard } from "./components/RewardCard";
 import { SummaryScreen } from "./components/SummaryScreen";
 import { MyProjectScreen } from "./components/MyProjectScreen";
 import { saveUser, saveQuiz, saveVictory } from "../utils/api";
+import { useNotifications } from "./hooks/useNotifications";
 
 export type Screen =
   | "splash"
@@ -25,8 +26,7 @@ export type Screen =
   | "reward-saude"
   | "reward-crescimento"
   | "summary"
-  | "my-project"
-  | "testemunhos";
+  | "my-project";
 
 export interface UserData {
   name: string;
@@ -90,6 +90,24 @@ export default function App() {
   const [projectCompleted, setProjectCompleted] =
     useState(false);
 
+  // 🔔 Hook de Notificações
+  const { notifications, requestPermission } = useNotifications();
+
+  // ✅ Solicitar permissão de notificações quando chegar na home
+  useEffect(() => {
+    if (currentScreen === 'home' && userData.name) {
+      // Aguarda 2 segundos para não interromper a experiência
+      setTimeout(() => {
+        requestPermission().then((granted) => {
+          if (granted) {
+            // Envia notificação de boas-vindas
+            notifications.welcome();
+          }
+        });
+      }, 2000);
+    }
+  }, [currentScreen, userData.name]);
+
   // Auto-advance from splash screen
   useState(() => {
     if (currentScreen === "splash") {
@@ -116,8 +134,14 @@ export default function App() {
       saveQuiz(userData.whatsapp, quizAnswers).catch(
         console.error,
       );
+      
+      // 🔔 Se completou todas as 5 áreas, envia notificação
+      const allCompleted = Object.values(quizAnswers).filter(a => a.selected).length === 5;
+      if (allCompleted && currentScreen === 'summary') {
+        notifications.quizCompleted();
+      }
     }
-  }, [quizAnswers, userData.whatsapp]);
+  }, [quizAnswers, userData.whatsapp, currentScreen]);
 
   const updateChallengeProgress = (
     area: keyof QuizAnswers,
@@ -139,6 +163,16 @@ export default function App() {
         area,
         data.victoryNote,
       ).catch(console.error);
+      
+      // 🔔 Enviar notificação de vitória
+      const areaNames: Record<string, string> = {
+        familiar: 'Área Familiar',
+        espiritual: 'Área Espiritual',
+        financeira: 'Área Financeira',
+        saude: 'Área de Saúde',
+        crescimento: 'Área de Crescimento'
+      };
+      notifications.victoryMarked(areaNames[area] || area);
     }
   };
 
@@ -365,11 +399,7 @@ export default function App() {
             onBackToHome={() => setCurrentScreen("home")}
           />
         )}
-        {currentScreen === "testemunhos" && (
-          <TestemunhosScreen
-            onBackToHome={() => setCurrentScreen("home")}
-          />
-        )}
+
       </div>
     </div>
   );
