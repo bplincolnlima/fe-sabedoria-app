@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import ebookCover1 from 'figma:asset/d4b487ff26ee999f6963cf64a9c86723a1f7b37b.png';
-import ebookCover2 from 'figma:asset/7d4f7e0c56037af9bc0e76e1b21f440d0c5e78b8.png';
+
+interface Ebook {
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+  available: boolean;
+}
 
 export function EbookCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -10,128 +15,127 @@ export function EbookCarousel() {
     {
       title: 'Restaurando Sua Identidade',
       description: 'Acessando a Sabedoria Milenar',
-      image: ebookCover1,
+      image: 'https://images.unsplash.com/photo-1679891983964-c7544b221dcf?w=800&h=600&fit=crop',
       link: 'https://pay.kiwify.com.br/k7g4gaf',
       available: true
     },
     {
       title: 'Histórias Bíblicas',
       description: 'Fé e Sabedoria',
-      image: ebookCover2,
+      image: 'https://images.unsplash.com/photo-1609656036445-e3f158ca97d5?w=800&h=600&fit=crop',
       link: 'https://pay.kiwify.com.br/gRmV8hJ',
       available: true
     }
   ];
 
+  // Auto-rotate every 5 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
+    const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % ebooks.length);
-    }, 4000); // Muda a cada 4 segundos
+    }, 5000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(timer);
   }, [ebooks.length]);
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + ebooks.length) % ebooks.length);
+  const goToPrevious = () => {
+    setCurrentIndex((prev) => 
+      prev === 0 ? ebooks.length - 1 : prev - 1
+    );
   };
 
-  const handleNext = () => {
+  const goToNext = () => {
     setCurrentIndex((prev) => (prev + 1) % ebooks.length);
   };
 
-  const currentEbook = ebooks[currentIndex];
-
-  const handleEbookClick = () => {
-    if (currentEbook?.available && currentEbook?.link) {
-      window.open(currentEbook.link, '_blank');
-    }
+  const handleComprar = (link: string) => {
+    window.open(link, '_blank');
   };
 
-  // Previne erros se o array estiver vazio ou índice inválido
-  if (!currentEbook) {
-    return null;
-  }
-
   return (
-    <div className="bg-gradient-to-br from-gray-900 to-black rounded-3xl shadow-2xl overflow-hidden border-2 border-gray-800 hover:border-amber-500/50 transition-all duration-300">
-      {/* Carousel Content */}
-      <div 
-        className="relative overflow-hidden min-h-[320px] cursor-pointer group"
-        onClick={handleEbookClick}
-      >
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <ImageWithFallback
-            src={currentEbook.image}
-            alt={currentEbook.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/60"></div>
-        </div>
-
-        {/* Shine effect on hover */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-
-        {/* Content */}
-        <div className="relative z-10 p-8 h-full flex flex-col justify-end text-white">
-          <div className="flex items-center space-x-3 mb-4">
-            <span className="text-4xl">📚</span>
-            {currentEbook.available && (
-              <div className="bg-amber-400 text-black px-3 py-1 rounded-full text-sm font-black">
-                DISPONÍVEL
-              </div>
-            )}
-          </div>
-          
-          <h3 className="text-4xl font-black mb-2 tracking-tight text-white leading-tight">{currentEbook.title}</h3>
-          <p className="text-xl text-gray-300 mb-4 font-medium">{currentEbook.description}</p>
-          
-          {currentEbook.available && (
-            <div className="bg-gradient-to-r from-amber-400 to-yellow-500 text-black font-black px-6 py-4 rounded-2xl inline-flex items-center space-x-2 group-hover:from-amber-500 group-hover:to-yellow-600 transition-all shadow-xl w-fit">
-              <span className="text-lg">ADQUIRIR AGORA</span>
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Navigation Controls - MINIMALISTA */}
-      <div className="bg-black border-t border-gray-800 px-6 py-4 flex items-center justify-between">
+    <div className="w-full">
+      {/* Carousel Container */}
+      <div className="relative bg-gradient-to-br from-gray-900 to-black rounded-3xl p-6 border-2 border-gray-800 shadow-2xl overflow-hidden">
+        {/* Navigation Arrows */}
         <button
-          onClick={handlePrev}
-          className="p-3 rounded-xl bg-gray-900 border border-gray-800 hover:border-amber-500/50 shadow transition-all"
-          aria-label="E-book anterior"
+          onClick={goToPrevious}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black border-2 border-gray-800 hover:border-amber-500/50 text-amber-400 rounded-full p-3 shadow-xl transition-all hover:scale-110"
+          aria-label="Anterior"
         >
-          <svg className="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
 
+        <button
+          onClick={goToNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black border-2 border-gray-800 hover:border-amber-500/50 text-amber-400 rounded-full p-3 shadow-xl transition-all hover:scale-110"
+          aria-label="Próximo"
+        >
+          <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        {/* E-book Content */}
+        <div className="px-12">
+          {/* Capa do E-book */}
+          <div className="relative mb-6 group">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent rounded-2xl z-10" />
+            <img
+              src={ebooks[currentIndex].image}
+              alt={ebooks[currentIndex].title}
+              className="w-full h-80 object-cover rounded-2xl shadow-2xl transition-transform group-hover:scale-[1.02]"
+            />
+            
+            {/* Badge Premium */}
+            <div className="absolute top-4 right-4 z-20 bg-gradient-to-r from-amber-400 to-yellow-500 text-black px-4 py-2 rounded-full text-sm font-black flex items-center space-x-2 shadow-xl">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+              </svg>
+              <span>PREMIUM</span>
+            </div>
+
+            {/* Info do E-book sobreposta */}
+            <div className="absolute bottom-0 left-0 right-0 z-20 p-6 text-white">
+              <p className="text-3xl font-black mb-2 drop-shadow-lg">{ebooks[currentIndex].title}</p>
+              <p className="text-lg font-bold text-amber-300 drop-shadow-lg">{ebooks[currentIndex].description}</p>
+            </div>
+          </div>
+
+          {/* Botão Comprar */}
+          <button
+            onClick={() => handleComprar(ebooks[currentIndex].link)}
+            className="w-full bg-gradient-to-r from-amber-400 to-yellow-500 text-black py-5 rounded-2xl shadow-xl hover:from-amber-500 hover:to-yellow-600 transform hover:scale-[1.02] active:scale-[0.98] transition-all"
+          >
+            <div className="flex items-center justify-center space-x-3">
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span className="text-2xl font-black">COMPRAR AGORA</span>
+            </div>
+          </button>
+
+          {/* Counter */}
+          <div className="text-center text-gray-500 text-sm font-bold mt-4">
+            {currentIndex + 1} de {ebooks.length}
+          </div>
+        </div>
+
         {/* Indicators */}
-        <div className="flex space-x-2">
+        <div className="flex justify-center space-x-2 mt-6">
           {ebooks.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
               className={`h-2 rounded-full transition-all ${
-                index === currentIndex ? 'bg-amber-400 w-8' : 'bg-gray-700 w-2'
+                index === currentIndex 
+                  ? 'w-8 bg-gradient-to-r from-amber-400 to-yellow-500' 
+                  : 'w-2 bg-gray-700 hover:bg-gray-600'
               }`}
-              aria-label={`Ir para e-book ${index + 1}`}
+              aria-label={`Ver e-book ${index + 1}`}
             />
           ))}
         </div>
-
-        <button
-          onClick={handleNext}
-          className="p-3 rounded-xl bg-gray-900 border border-gray-800 hover:border-amber-500/50 shadow transition-all"
-          aria-label="Próximo e-book"
-        >
-          <svg className="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
       </div>
     </div>
   );
