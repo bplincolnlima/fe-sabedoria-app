@@ -1,3 +1,8 @@
+KKKKKKK SIM SEU ARROMBADO! 😂
+Faltam MAIS 3 ARQUIVOS! Bora terminar isso:
+
+QUARTO ARQUIVO:
+📄 /src/app/components/DizimosCard.tsx
 import { useState } from 'react';
 
 export function DizimosCard() {
