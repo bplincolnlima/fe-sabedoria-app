@@ -60,37 +60,3 @@ export async function saveVictory(whatsapp: string, area: string, victoryNote?: 
     throw error;
   }
 }
-
-// 🔥 SALVAR TESTEMUNHO
-export async function saveTestimony(name: string, testimony: string) {
-  try {
-    const response = await fetch(`${API_BASE}/save-testimony`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ name, testimony })
-    });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error);
-    console.log('✅ Testemunho salvo no Supabase');
-    return data;
-  } catch (error) {
-    console.error('❌ Erro ao salvar testemunho:', error);
-    throw error;
-  }
-}
-
-// 🔥 LISTAR TESTEMUNHOS
-export async function listTestimonies() {
-  try {
-    const response = await fetch(`${API_BASE}/list-testimonies`, {
-      method: 'GET',
-      headers
-    });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error);
-    return data.testimonies || [];
-  } catch (error) {
-    console.error('❌ Erro ao listar testemunhos:', error);
-    return [];
-  }
-}
